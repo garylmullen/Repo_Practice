@@ -1,0 +1,28 @@
+ %% 
+     % Implicit boundary conditions
+      %A(1,1) = 1;
+      %A(nx,nx) = 1;
+         
+     % T(x = -L/2,t) = T_left;
+     % T(x = L/2,t) = T_right;
+     % Initial condition
+     % T(x < -2.5, x > 2.5,t = 0) = 300
+     % T(-2.5 <= x <=2.5,t=0)     = 1200
+     
+     % Coefficient matrix A
+     % A = sparse(nx,nx);
+     % for i = 2:nx-1
+     %       A(i, i-1)  = -s;
+     %       A(i, i)    = (1+2*s);
+     %       A(i,i+1)   = -s;
+     % end
+     % s       =   kappa * dt / dx^2;   % Heat equation    
+     
+     
+     %rhs = zeros(nx,1)
+     %rhs(2:nx-1) = Told(2:nx-1);
+     %rhs(1) = Tleft;
+     %rhs(nx) = Tright;
+     %c = A\rhs;
+     
+     
