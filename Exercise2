@@ -22,35 +22,35 @@ x       =   -L/2:dx:L/2; % Grid
 
 % Setup initial temperature profile
 T       =   ones(size(x))*Trock;
-T(find(abs(x)<=W/2) = Tmagma;
+T(abs(x)<=W/2) = Tmagma;
 
 time = 0;
 for n=1:nt               % Timestep loop
-      % Compute new temperature
-      Tnew   =    zeros(1,nx);
-      for i=2:nx-1
-          Tnew(i) =  T(i) + kappa*dt*(T(i+1)-2*T(i)+T(i-1)\dx^2);
-      end  
+	% Compute new temperature
+      	Tnew   =    zeros(1,nx);
+      	for i=2:nx-1
+      	    Tnew(i) =  T(i) + kappa*dt*(T(i+1)-2*T(i)+T(i-1)\dx^2);
+      	end  
     
     
-    % Set boundary conditions
-    Tnew(1)     =   T(1);
-    Tnew(nx)    =   T(nx);
+   	% Set boundary conditions
+    	Tnew(1)     =   T(1);
+    	Tnew(nx)    =   T(nx);
     
-    % Update temperature and time
-    T           =   Tnew;
-    time        =   time+dt;
+    	% Update temperature and time
+    	T           =   Tnew;
+    	time        =   time+dt;
     
     
-    %Plot solution
-    figure(1), clf
-    plot(x,Tnew);
-    xlabel('x [m]')
-    ylabel('Temperature [^oC]')
-    title(['Temperature evolution after ',num2str(time/day),'days'])
-    drawnow
+    	%Plot solution
+    	figure(1), clf
+    	plot(x,Tnew);
+    	xlabel('x [m]')
+    	ylabel('Temperature [^oC]')
+    	title(['Temperature evolution after ',num2str(time/day),'days'])
+    	drawnow
     
     
    
-    end
+end
 
