@@ -24,33 +24,42 @@ x       =   -L/2:dx:L/2; % Grid
 T       =   ones(size(x))*Trock;
 T(abs(x)<=W/2) = Tmagma;
 
+figure(1); clf;
+figure(2); clf;
+
 time = 0;
+Trecord = zeros(nt,1);
 for n=1:nt               % Timestep loop
-	% Compute new temperature
-      	Tnew   =    zeros(1,nx);
-      	for i=2:nx-1
-      	    Tnew(i) =  T(i) + kappa*dt*(T(i+1)-2*T(i)+T(i-1)\dx^2);
-      	end  
+    % Compute new temperature
+    Tnew   =    zeros(1,nx);
+    for i=2:nx-1
+        Tnew(i) =  T(i) + kappa*dt*(T(i+1)-2*T(i)+T(i-1))/dx^2;
+    end
     
     
-   	% Set boundary conditions
-    	Tnew(1)     =   T(1);
-    	Tnew(nx)    =   T(nx);
+    % Set boundary conditions
+    Tnew(1)     =   T(1);
+    Tnew(nx)    =   T(nx);
     
-    	% Update temperature and time
-    	T           =   Tnew;
-    	time        =   time+dt;
+    % Update temperature and time
+    T           =   Tnew;
+    time        =   time+dt;
     
+    % Record T at 5 m distance
+    Trecord(n) = T(x==5);
     
-    	%Plot solution
-    	figure(1), clf
-    	plot(x,Tnew);
-    	xlabel('x [m]')
-    	ylabel('Temperature [^oC]')
-    	title(['Temperature evolution after ',num2str(time/day),'days'])
-    	drawnow
+    if ~mod(n,10)
+        %Plot solution
+        figure(1), clf
+        plot(x,Tnew);
+        xlabel('x [m]')
+        ylabel('Temperature [^oC]')
+        title(['Temperature evolution after ',num2str(time/day),'days'])
+        drawnow
+        
+        figure(2);
+        plot(time/day,Trecord(n),'ro'); hold on;
+    end
     
-    
-   
 end
 
